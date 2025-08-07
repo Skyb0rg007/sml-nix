@@ -3,7 +3,10 @@
   lib,
   ...
 }: {
+  # Builds on x64
   smlnj-110_99_8 = pkgs.callPackage ./smlnj/110.99.8.nix {};
+  smlnj-110_99_7_1 = pkgs.callPackage ./smlnj/110.99.7.1.nix {};
+  smlnj-110_99_7 = pkgs.callPackage ./smlnj/110.99.7.nix {};
   smlnj-110_92 = lib.callPackageWith pkgs.pkgsi686Linux ./smlnj/110.92.nix {};
   smlnj-110_91 = lib.callPackageWith pkgs.pkgsi686Linux ./smlnj/110.91.nix {};
 
@@ -62,8 +65,6 @@
   smlnj-110_43 = lib.callPackageWith pkgs.pkgsi686Linux ./smlnj/110.43.nix {};
   smlnj-110_42 = lib.callPackageWith pkgs.pkgsi686Linux ./smlnj/110.42.nix {};
 
-  smlnj-110_99_7_1 = pkgs.callPackage ./smlnj/110.99.7.1.nix {};
-  smlnj-110_99_7 = pkgs.callPackage ./smlnj/110.99.7.nix {};
   smlnj-110_99_6_1 = pkgs.callPackage ./smlnj/110.99.6.1.nix {};
   smlnj-110_99_6 = pkgs.callPackage ./smlnj/110.99.6.nix {};
   smlnj-110_99_5 = pkgs.callPackage ./smlnj/110.99.5.nix {};

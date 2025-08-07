@@ -1,4 +1,8 @@
-{pkgs, stdenv, ...}:
+{
+  pkgs,
+  stdenv,
+  ...
+}:
 pkgs.callPackage ./release.nix {
   version = "110.99.7.1";
   bootFile =
