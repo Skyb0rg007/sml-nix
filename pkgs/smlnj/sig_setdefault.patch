@@ -1,0 +1,11 @@
+--- a/base/runtime/mach-dep/unix-prof.c
++++ b/base/runtime/mach-dep/unix-prof.c
+@@ -34,7 +34,7 @@
+  */
+ void DisableProfSignals ()
+ {
+-    SIG_SetHandler (SIGVTALRM, SIG_DFL);
++    SIG_SetDefault (SIGVTALRM);
+
+ } /* end of DisableProfSignals */
+

@@ -1,0 +1,12 @@
+--- a/config/chk-global-names.sh
++++ b/config/chk-global-names.sh
+@@ -13,7 +13,7 @@
+ WITNESS="w3E_4Ew3E_4Rrr_56TtT"
+
+ cat > $TMP_FILE_C <<XXXX
+-$WITNESS () {}
++void $WITNESS () {}
+ XXXX
+
+ $CC -c -o $TMP_FILE $TMP_FILE_C
+
