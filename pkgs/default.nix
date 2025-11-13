@@ -8,6 +8,7 @@
   };
 
   # Builds on x64
+  smlnj-110_99_9 = pkgs.callPackage ./smlnj/110.99.9.nix {};
   smlnj-110_99_8 = pkgs.callPackage ./smlnj/110.99.8.nix {};
   smlnj-110_99_7_1 = pkgs.callPackage ./smlnj/110.99.7.1.nix {};
   smlnj-110_99_7 = pkgs.callPackage ./smlnj/110.99.7.nix {};
