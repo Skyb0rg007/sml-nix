@@ -7,6 +7,8 @@
     inherit smlnj-110_99_8;
   };
 
+  smlnj-2025_2 = pkgs.callPackage ./smlnj/2025.2.nix {};
+
   # Builds on x64
   smlnj-110_99_9 = pkgs.callPackage ./smlnj/110.99.9.nix {};
   smlnj-110_99_8 = pkgs.callPackage ./smlnj/110.99.8.nix {};

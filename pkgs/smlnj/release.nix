@@ -60,10 +60,7 @@ in
     installPhase = ''
       mkdir -pv $out
       cp -rv bin lib $out
-
-      for f in $out/bin/*; do
-        sed -i "2iSMLNJ_HOME=$out/" "$f"
-      done
+      sed -i "2iSMLNJ_HOME=$out/" "$out"/bin/*
     '';
 
     meta = {
