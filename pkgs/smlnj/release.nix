@@ -31,7 +31,7 @@ stdenv.mkDerivation {
   pname = "smlnj";
   inherit version sources patches;
 
-  buildInputs = [ gnumake42 ];
+  nativeBuildInputs = [ gnumake42 ];
 
   unpackPhase = ''
     for s in $sources; do
