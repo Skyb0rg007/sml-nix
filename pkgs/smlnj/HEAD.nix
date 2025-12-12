@@ -5,15 +5,17 @@
   lib,
   ...
 }: let
-  arch = if stdenv.hostPlatform.is64bit then "64" else "32";
+  arch =
+    if stdenv.hostPlatform.is64bit
+    then "64"
+    else "32";
   version = "110.99.9-alpha+e29054f";
-  src =
-    fetchFromGitHub {
-      owner = "smlnj";
-      repo = "legacy";
-      rev = "e29054f5a1892ab52401d4fee2201ec78cace53f";
-      hash = "sha256-okxzWk6QwawY/0rBy+e679OBnkPxCyF0Scf/3PxjLoU=";
-    };
+  src = fetchFromGitHub {
+    owner = "smlnj";
+    repo = "legacy";
+    rev = "e29054f5a1892ab52401d4fee2201ec78cace53f";
+    hash = "sha256-okxzWk6QwawY/0rBy+e679OBnkPxCyF0Scf/3PxjLoU=";
+  };
   bootFile = stdenv.mkDerivation {
     pname = "smlnj-bootfile";
     inherit version src;

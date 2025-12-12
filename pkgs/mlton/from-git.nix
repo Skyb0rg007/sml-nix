@@ -1,6 +1,6 @@
 {
   lib,
-  bootstrap,
+  bootstrapMlton,
   fetchFromGitHub,
   version,
   rev,
@@ -18,7 +18,7 @@ stdenv.mkDerivation {
     inherit rev hash;
   };
 
-  nativeBuildInputs = [bootstrap];
+  nativeBuildInputs = [bootstrapMlton];
   buildInputs = [gmp];
   strictDeps = true;
 
@@ -39,7 +39,9 @@ stdenv.mkDerivation {
   '';
 
   meta = {
+    description = "Open-source, whole-program, optimizing Standard ML compiler";
     homepage = "http://mlton.org";
-    license = lib.licenses.smlnj;
+    licenses = lib.licenses.smlnj;
+    mainProgram = "mlton";
   };
 }
