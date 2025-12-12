@@ -54,13 +54,9 @@ in
     '';
 
     buildPhase = ''
-      ./config/install.sh -default ${arch}
-    '';
-
-    installPhase = ''
       mkdir -pv $out
-      cp -rv bin lib $out
-      sed -i "2iSMLNJ_HOME=$out/" "$out"/bin/*
+      export INSTALLDIR="$out"
+      ./config/install.sh -default ${arch}
     '';
 
     meta = {
