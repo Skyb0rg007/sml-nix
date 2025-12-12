@@ -56,6 +56,9 @@ stdenv.mkDerivation {
   '';
 
   buildPhase = ''
+    ${lib.optionalString (lib.versionOlder version "110.99.2") ''
+      PATH="$PATH:$out/bin"
+    ''}
     mkdir -pv $out
     export INSTALLDIR="$out"
     ./config/install.sh -default ${arch}
