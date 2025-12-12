@@ -1,0 +1,24 @@
+name: 'Build'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+      - uses: cachix/cachix-action@v16
+        with:
+          name: skyenet
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - name: Build SML/NJ versions
+        run: |
+          nix build .#smlnj-110_99_9
+          nix build .#smlnj-110_99_8
+      - name: Build MLton binary release
+        run: |
+          nix build .#mlton-20241230-binary
