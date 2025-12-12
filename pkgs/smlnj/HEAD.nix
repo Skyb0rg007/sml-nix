@@ -4,11 +4,9 @@
   fetchFromGitHub,
   lib,
   ...
-}: let
-  arch =
-    if stdenv.hostPlatform.is64bit
-    then "64"
-    else "32";
+}:
+let
+  arch = if stdenv.hostPlatform.is64bit then "64" else "32";
   version = "110.99.9-alpha+e29054f";
   src = fetchFromGitHub {
     owner = "smlnj";
@@ -19,7 +17,7 @@
   bootFile = stdenv.mkDerivation {
     pname = "smlnj-bootfile";
     inherit version src;
-    buildInputs = [smlnj-110_99_8];
+    buildInputs = [ smlnj-110_99_8 ];
     buildPhase = ''
       sed -ni '/^# boot the base SML system/q;p' config/install.sh
       ./config/install.sh
@@ -36,31 +34,36 @@
     '';
   };
 in
-  stdenv.mkDerivation {
-    pname = "smlnj";
-    inherit version src;
-    passthru.bootFile = bootFile;
-    postUnpack = ''
-      ln -s ${bootFile} source/boot.amd64-unix.tgz
-      (cd source && bash -x ./config/unpack $PWD boot.amd64-unix)
-    '';
-    buildPhase = ''
-      ./config/install.sh -default ${arch}
-    '';
-    installPhase = ''
-      mkdir -pv $out
-      cp -rv bin lib $out
+stdenv.mkDerivation {
+  pname = "smlnj";
+  inherit version src;
+  passthru.bootFile = bootFile;
+  postUnpack = ''
+    ln -s ${bootFile} source/boot.amd64-unix.tgz
+    (cd source && bash -x ./config/unpack $PWD boot.amd64-unix)
+  '';
+  buildPhase = ''
+    ./config/install.sh -default ${arch}
+  '';
+  installPhase = ''
+    mkdir -pv $out
+    cp -rv bin lib $out
 
-      for f in $out/bin/*; do
-        sed -i "2iSMLNJ_HOME=$out/" "$f"
-      done
-    '';
+    for f in $out/bin/*; do
+      sed -i "2iSMLNJ_HOME=$out/" "$f"
+    done
+  '';
 
-    meta = {
-      description = "Standard ML of New Jersey";
-      homepage = "https://smlnj.org";
-      license = lib.licenses.bsd3;
-      platforms = ["x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-darwin"];
-      mainProgram = "sml";
-    };
-  }
+  meta = {
+    description = "Standard ML of New Jersey";
+    homepage = "https://smlnj.org";
+    license = lib.licenses.bsd3;
+    platforms = [
+      "x86_64-linux"
+      "i686-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
+    mainProgram = "sml";
+  };
+}

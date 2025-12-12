@@ -10,7 +10,8 @@
   autoconf,
   automake,
   ...
-}: let
+}:
+let
   version = "2025.2";
   targets =
     lib.optional stdenv.targetPlatform.isx86_64 "X86"
@@ -136,28 +137,28 @@
     ];
   };
 in
-  assert targets != [];
-  stdenv.mkDerivation {
-    pname = "smlnj";
-    inherit src version;
-    passthru.llvm = smlnj-llvm;
-    nativeBuildInputs = [
-      cmake
-      autoconf
-      automake
-    ];
-    dontUseCmakeConfigure = true;
-    patchPhase = ''
-      unpackFile ${bootfile}
-      sed -i '/^PATH=/d' config/_arch-n-opsys runtime/config/gen-posix-names.sh
-      rm -r runtime/llvm18
-      mkdir -p runtime/bin runtime/lib
-      ln -s ${smlnj-llvm}/bin/llvm-config runtime/bin/llvm-config
-      ln -s ${smlnj-llvm}/lib/libCFGCodeGen.a runtime/lib/libCFGCodeGen.a
-    '';
-    buildPhase = ''
-      export INSTALLDIR=$out
-      mkdir -pv $out
-      ./build.sh
-    '';
-  }
+assert targets != [ ];
+stdenv.mkDerivation {
+  pname = "smlnj";
+  inherit src version;
+  passthru.llvm = smlnj-llvm;
+  nativeBuildInputs = [
+    cmake
+    autoconf
+    automake
+  ];
+  dontUseCmakeConfigure = true;
+  patchPhase = ''
+    unpackFile ${bootfile}
+    sed -i '/^PATH=/d' config/_arch-n-opsys runtime/config/gen-posix-names.sh
+    rm -r runtime/llvm18
+    mkdir -p runtime/bin runtime/lib
+    ln -s ${smlnj-llvm}/bin/llvm-config runtime/bin/llvm-config
+    ln -s ${smlnj-llvm}/lib/libCFGCodeGen.a runtime/lib/libCFGCodeGen.a
+  '';
+  buildPhase = ''
+    export INSTALLDIR=$out
+    mkdir -pv $out
+    ./build.sh
+  '';
+}

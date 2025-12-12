@@ -3,18 +3,21 @@
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-  }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
     flake-utils.lib.eachDefaultSystem (
-      system: let
+      system:
+      let
         pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        formatter = pkgs.alejandra;
-        packages = pkgs.callPackage ./pkgs {};
+      in
+      {
+        formatter = pkgs.nixfmt-tree;
+        packages = pkgs.callPackage ./pkgs { };
       }
     )
-    // flake-utils.lib.eachDefaultSystemPassThrough (system: {});
+    // flake-utils.lib.eachDefaultSystemPassThrough (system: { });
 }

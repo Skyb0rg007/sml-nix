@@ -18,8 +18,8 @@ stdenv.mkDerivation {
     inherit rev hash;
   };
 
-  nativeBuildInputs = [bootstrapMlton];
-  buildInputs = [gmp];
+  nativeBuildInputs = [ bootstrapMlton ];
+  buildInputs = [ gmp ];
   strictDeps = true;
 
   doCheck = true;

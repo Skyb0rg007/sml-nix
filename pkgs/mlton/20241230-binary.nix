@@ -10,16 +10,18 @@
   gmp,
   patchelf,
   stdenv,
-}: let
+}:
+let
   pname = "mlton";
   version = "20241230";
 
-  fetchsrc = {
-    hash,
-    arch,
-    os,
-    variant,
-  }:
+  fetchsrc =
+    {
+      hash,
+      arch,
+      os,
+      variant,
+    }:
     fetchurl {
       url = "https://github.com/MLton/mlton/releases/download/on-${version}-release/mlton-${version}-1.${arch}.${os}_${variant}.tgz";
       inherit hash;
@@ -62,48 +64,49 @@
     hash = "sha256-dhcnfy0Mq6iA31cvarfxHfMRBDnCpNq53Rui4efNTOY=";
   };
 in
-  stdenv.mkDerivation {
-    inherit pname version;
-    passthru = {
-      inherit src-amd64-focal-glibc2_31;
-      inherit src-amd64-focal-static;
-      inherit src-amd64-jammy-glibc2_35;
-      inherit src-amd64-jammy-static;
-      inherit src-amd64-noble-glibc2_39;
-      inherit src-amd64-noble-static;
-    };
+stdenv.mkDerivation {
+  inherit pname version;
+  passthru = {
+    inherit src-amd64-focal-glibc2_31;
+    inherit src-amd64-focal-static;
+    inherit src-amd64-jammy-glibc2_35;
+    inherit src-amd64-jammy-static;
+    inherit src-amd64-noble-glibc2_39;
+    inherit src-amd64-noble-static;
+  };
 
-    src =
-      if stdenv.hostPlatform.system == "x86_64-linux"
-      then src-amd64-noble-glibc2_39
-      else throw "Unsupported platform";
+  src =
+    if stdenv.hostPlatform.system == "x86_64-linux" then
+      src-amd64-noble-glibc2_39
+    else
+      throw "Unsupported platform";
 
-    nativeBuildInputs = lib.optional stdenv.hostPlatform.isLinux [patchelf];
-    buildInputs = [gmp];
-    strictDeps = true;
+  nativeBuildInputs = lib.optional stdenv.hostPlatform.isLinux [ patchelf ];
+  buildInputs = [ gmp ];
+  strictDeps = true;
 
-    buildPhase = ''
-      make update \
-        CC="${lib.getExe stdenv.cc}" \
-        WITH_GMP_INC_DIR="${gmp.dev}/include" \
-        WITH_GMP_LIB_DIR="${gmp}/lib"
-    '';
+  buildPhase = ''
+    make update \
+      CC="${lib.getExe stdenv.cc}" \
+      WITH_GMP_INC_DIR="${gmp.dev}/include" \
+      WITH_GMP_LIB_DIR="${gmp}/lib"
+  '';
 
-    installPhase = ''
-      make install PREFIX=$out
-    '';
+  installPhase = ''
+    make install PREFIX=$out
+  '';
 
-    postFixup = lib.optionalString stdenv.hostPlatform.isLinux ''
-      for f in $out/lib/mlton/mlton-compile $out/bin/{mllex,mlnlffigen,mlprof,mlyacc}; do
-        patchelf --set-interpreter ${stdenv.cc.bintools.dynamicLinker} $f
-        patchelf --set-rpath ${gmp}/lib $f
-      done
-    '';
+  postFixup = lib.optionalString stdenv.hostPlatform.isLinux ''
+    for f in $out/lib/mlton/mlton-compile $out/bin/{mllex,mlnlffigen,mlprof,mlyacc}; do
+      patchelf --set-interpreter ${stdenv.cc.bintools.dynamicLinker} $f
+      patchelf --set-rpath ${gmp}/lib $f
+    done
+  '';
 
-    meta = {
-      description = "Open-source, whole-program, optimizing Standard ML compiler";
-      homepage = "http://mlton.org";
-      licenses = lib.licenses.smlnj;
-      mainProgram = "mlton";
-    };
-  }
+  meta = {
+    description = "Open-source, whole-program, optimizing Standard ML compiler";
+    homepage = "http://mlton.org";
+    licenses = lib.licenses.smlnj;
+    mainProgram = "mlton";
+  };
+}
