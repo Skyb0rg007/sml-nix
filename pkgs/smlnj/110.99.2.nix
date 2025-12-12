@@ -1,10 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, stdenv, ... }:
 pkgs.callPackage ./release.nix {
-  version = "110.91";
-  bootFile = "boot.x86-unix.tgz";
-  platforms = [ "i686-linux" ];
+  version = "110.99.2";
+  bootFile = if stdenv.hostPlatform.is64bit then "boot.amd64-unix.tgz" else "boot.x86-unix.tgz";
+  platforms = [
+    "x86_64-linux"
+    "i686-linux"
+    "x86_64-darwin"
+    "aarch64-darwin"
+  ];
   patches = [
-    ./linux-v6.patch
     ./sig_setdefault.patch
   ];
 }
