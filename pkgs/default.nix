@@ -23,6 +23,7 @@ rec {
   };
 
   smlnj-2025_2 = pkgs.callPackage ./smlnj/2025.2.nix { };
+  smlnj-2025_1 = pkgs.callPackage ./smlnj/2025.1.nix { };
 
   # Builds on x64
   smlnj-110_99_9 = pkgs.callPackage ./smlnj/110.99.9.nix { };
