@@ -16,8 +16,8 @@
       in
       {
         formatter = pkgs.nixfmt-tree;
-        packages = pkgs.callPackage ./pkgs { };
+        packages = import ./default.nix { inherit pkgs; };
       }
-    )
-    // flake-utils.lib.eachDefaultSystemPassThrough (system: { });
+    );
+  # // flake-utils.lib.eachDefaultSystemPassThrough (system: { });
 }

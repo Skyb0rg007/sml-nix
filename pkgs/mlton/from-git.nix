@@ -22,6 +22,8 @@ stdenv.mkDerivation {
   buildInputs = [ gmp ];
   strictDeps = true;
 
+  # TODO: install-docs
+
   doCheck = true;
 
   preBuild = ''

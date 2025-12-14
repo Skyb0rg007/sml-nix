@@ -3,6 +3,9 @@
 declare -a files=(
     "boot.amd64-unix.tgz"
     "boot.x86-unix.tgz"
+    "boot.x86-win32.tgz"
+    "boot.ppc-unix.tgz"
+    "boot.sparc-unix.tgz"
     "config.tgz"
     "cm.tgz"
     "compiler.tgz"
