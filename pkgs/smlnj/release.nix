@@ -179,4 +179,17 @@ stdenv.mkDerivation {
     mkdir -pv $out
     ./build.sh
   '';
+
+  meta = {
+    description = "Standard ML of New Jersey";
+    homepage = "https://smlnj.org";
+    changelog = "${baseurl}/HISTORY.html";
+    license = lib.licenses.smlnj;
+    platforms =
+      lib.lists.intersectLists lib.platforms.unix lib.platforms.x86
+      ++ lib.lists.intersectLists lib.platforms.unix lib.platforms.power
+      ++ lib.platforms.darwin
+      ++ [ "i686-windows" ];
+    mainProgram = "sml";
+  };
 }

@@ -113,7 +113,7 @@ stdenv.mkDerivation {
         "${baseurl}/NOTES/HISTORY"
       else
         "${baseurl}/HISTORY";
-    license = lib.licenses.bsd3;
+    license = lib.licenses.smlnj;
     platforms =
       lib.lists.intersectLists lib.platforms.unix lib.platforms.x86
       ++ lib.lists.intersectLists lib.platforms.unix lib.platforms.power
