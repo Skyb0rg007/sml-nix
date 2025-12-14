@@ -66,7 +66,12 @@ stdenv.mkDerivation {
     else
       unpackFile runtime.tgz
     fi
-    unpackFile doc.tgz
+    ${lib.optionalString (version != "110.89") ''
+      unpackFile doc.tgz
+    ''}
+    ${lib.optionalString (version == "110.89") ''
+      tar --strip-components=1 -xf doc.tgz doc/doc
+    ''}
   '';
 
   prePatch = ''

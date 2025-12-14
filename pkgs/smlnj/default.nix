@@ -110,12 +110,13 @@
       ./linux-v6.patch
     ];
   };
-  # smlnj-110_89 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
-  #   version = "110.89";
-  #   patches = [
-  #     # ./sig_setdefault.patch
-  #   ];
-  # };
+  smlnj-110_89 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
+    version = "110.89";
+    patches = [
+      ./sig_setdefault.patch
+      ./linux-v6.patch
+    ];
+  };
   # smlnj-110_45 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
   #   version = "110.45";
   #   patches = [
