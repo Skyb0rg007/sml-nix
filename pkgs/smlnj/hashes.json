@@ -1068,6 +1068,7 @@
   },
   "110.87": {
     "MLRISC.tgz": "sha256-BFIM8jH01j2cT6VGpxlhGaIEQs1Vw/Ls17u3IphYrWU=",
+    "boot.x86-unix.tgz": "sha256-+KqoFhpABJA9v5FDhA47TsFfAi7xvdQb3TqIzraaUwE=",
     "asdl.tgz": "sha256-mGzLB6/s8t5xEL4DfLH9eS/gCZOE8R4lzt4fMVrgCWA=",
     "ckit.tgz": "sha256-ind/0jmeREszcNT7rD6kef/HxeIF0hmkuXmcF3PCEM8=",
     "cm.tgz": "sha256-oiwbUFQ6XAPl1t1tGqGYcccjD5N8Zh4tgr2PlxyH9po=",

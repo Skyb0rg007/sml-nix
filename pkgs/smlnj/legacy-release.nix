@@ -42,6 +42,7 @@ stdenv.mkDerivation {
   inherit version sources patches;
 
   nativeBuildInputs = [
+    # TODO: Determine which version needs this
     gnumake42
   ];
 
@@ -69,7 +70,8 @@ stdenv.mkDerivation {
     ${lib.optionalString (version != "110.89") ''
       unpackFile doc.tgz
     ''}
-    ${lib.optionalString (version == "110.89") ''
+    ${# This version mispackaged the doc.tgz file
+      lib.optionalString (version == "110.89") ''
       tar --strip-components=1 -xf doc.tgz doc/doc
     ''}
   '';

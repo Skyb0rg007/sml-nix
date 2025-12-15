@@ -1,13 +1,20 @@
 {
   pkgs ? import <nixpkgs> { },
 }:
-{
+rec {
   smlnj-2025_2 = pkgs.callPackage ./release.nix {
     version = "2025.2";
   };
   # smlnj-2025_1 = pkgs.callPackage ./release.nix {
   #   version = "2025.1";
   # };
+
+  smlnj-HEAD = pkgs.callPackage ./legacy-git.nix {
+    version = "110.99.10-f210dfe";
+    rev = "f210dfea76f162f7918a6c607658eee9d3469843";
+    hash = "sha256-iKtJF4Dfyr8WW494wQWET2JLdLIRbAG6jwA8xNcYAn4=";
+    bootstrapSmlnj = smlnj-110_99_9;
+  };
 
   smlnj-110_99_9 = pkgs.callPackage ./legacy-release.nix {
     version = "110.99.9";
@@ -110,11 +117,42 @@
       ./linux-v6.patch
     ];
   };
+  smlnj-110_91 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
+    version = "110.91";
+    patches = [
+      ./sig_setdefault.patch
+      ./linux-v6.patch
+    ];
+  };
+  # XXX: Uncaught exception CFunNotFound SMLNJ-RunT.itick
+  # smlnj-110_90 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
+  #   version = "110.90";
+  #   patches = [
+  #     ./sig_setdefault.patch
+  #     ./linux-v6.patch
+  #   ];
+  # };
   smlnj-110_89 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
     version = "110.89";
     patches = [
       ./sig_setdefault.patch
       ./linux-v6.patch
+    ];
+  };
+  smlnj-110_88 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
+    version = "110.88";
+    patches = [
+      ./sig_setdefault.patch
+      ./linux-v6.patch
+      ./chk-global-names-returntype.patch
+    ];
+  };
+  smlnj-110_87 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
+    version = "110.87";
+    patches = [
+      ./sig_setdefault.patch
+      ./linux-v6.patch
+      ./chk-global-names-returntype.patch
     ];
   };
   # smlnj-110_45 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
