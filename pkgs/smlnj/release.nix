@@ -10,6 +10,7 @@
   autoconf,
   automake,
   version,
+  rev ? "v${version}",
   ...
 }:
 let
@@ -21,8 +22,8 @@ let
   src = fetchFromGitHub {
     owner = "smlnj";
     repo = "smlnj";
-    rev = "v${version}";
-    hash = hashes.${version}.git;
+    inherit rev;
+    hash = hashes.${version}.${rev};
     fetchSubmodules = true;
   };
   bootFileName =
@@ -39,7 +40,7 @@ let
     else
       throw "Unsupported host platform: ${stdenv.hostPlatform.config}";
   bootFile = fetchurl {
-    url = "https://smlnj.cs.uchicago.edu/dist/working/2025.2/${bootFileName}";
+    url = "https://smlnj.cs.uchicago.edu/dist/working/${version}/${bootFileName}";
     hash = hashes.${version}.${bootFileName};
   };
   smlnj-llvm = stdenv.mkDerivation {

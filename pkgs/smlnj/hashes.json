@@ -1713,15 +1713,15 @@
     "trace-debug-profile.tgz": "sha256-r0X3H+0QjEAECI7HE127Zs/jguce2amSn/ql9pv06F8="
   },
   "2025.1": {
-    "git": "sha256-BU6LMmVIOmxvZlI47uZhuHVXUgyV1uYa4MqJOToEd0U=",
+    "v2025.1": "sha256-BU6LMmVIOmxvZlI47uZhuHVXUgyV1uYa4MqJOToEd0U=",
     "boot.amd64-unix.tgz": "sha256-N4EfJcHrco0aB7bAeXnAZzL7naZaM3yKI/U7iuSoMBs="
   },
   "2025.2": {
-    "git": "sha256-TEchaj0YSCK4kCQJNdgvHi83RtCZcRv64RSgYMlpZIY=",
+    "v2025.2": "sha256-TEchaj0YSCK4kCQJNdgvHi83RtCZcRv64RSgYMlpZIY=",
     "boot.amd64-unix.tgz": "sha256-N4EfJcHrco0aB7bAeXnAZzL7naZaM3yKI/U7iuSoMBs="
   },
   "2025.3-rc1": {
-    "git": "sha256-hk2KYI7IfFwPtSLtaB46NHvXtFFjk2KgwgNNIQArPd8=",
-    "boot.amd64-unix.tgz": "sha256-N4EfJcHrco0aB7bAeXnAZzL7naZaM3yKI/U7iuSoMBs="
+    "b229cc62316c916bd26dd2c0afde7224c436151b": "sha256-hRtyX8xypbsXGSqP2qFz40nJeHJcwJZeUvyqMqcain8=",
+    "boot.amd64-unix.tgz": "sha256-KGE0K5P4yC8BqrUpNoUAk9J7ORC4ucw5RPjfDAItbNg="
   }
 }
