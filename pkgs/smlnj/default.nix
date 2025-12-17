@@ -2,6 +2,9 @@
   pkgs ? import <nixpkgs> { },
 }:
 rec {
+  smlnj-2025_3_rc1 = pkgs.callPackage ./release.nix {
+    version = "2025.3-rc1";
+  };
   smlnj-2025_2 = pkgs.callPackage ./release.nix {
     version = "2025.2";
   };
@@ -149,6 +152,15 @@ rec {
   };
   smlnj-110_87 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
     version = "110.87";
+    patches = [
+      ./sig_setdefault.patch
+      ./linux-v6.patch
+      ./chk-global-names-returntype.patch
+    ];
+  };
+  # SML/NJ 110.86 doesn't exist
+  smlnj-110_85 = pkgs.pkgsi686Linux.callPackage ./legacy-release.nix {
+    version = "110.85";
     patches = [
       ./sig_setdefault.patch
       ./linux-v6.patch

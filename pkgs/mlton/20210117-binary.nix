@@ -10,18 +10,19 @@
   gmp,
   patchelf,
   stdenv,
+  fetchpatch,
 }:
 let
   pname = "mlton";
-  version = "20241230";
+  version = "20210117";
   hashes = builtins.fromJSON (builtins.readFile ./hashes.json);
 
   arch = if stdenv.hostPlatform.isx86_64 then "amd64-linux" else throw "NYI";
 
-  variant = if stdenv.hostPlatform.isLinux then "ubuntu-24.04_glibc2.39" else throw "NYI";
+  variant = if stdenv.hostPlatform.isLinux then "glibc2.31" else throw "NYI";
 
   src = fetchurl {
-    url = "https://github.com/MLton/mlton/releases/download/on-${version}-release/mlton-${version}-1.${arch}.${variant}.tgz";
+    url = "https://github.com/MLton/mlton/releases/download/on-${version}-release/mlton-${version}-1.${arch}-${variant}.tgz";
     hash = hashes.${version}.${arch}.${variant};
   };
 in
@@ -32,6 +33,15 @@ stdenv.mkDerivation {
   nativeBuildInputs = lib.optional stdenv.hostPlatform.isLinux [ patchelf ];
   buildInputs = [ gmp ];
   strictDeps = true;
+
+  patches = [
+    (fetchpatch {
+      name = "remove-duplicate-if.patch";
+      url = "https://github.com/MLton/mlton/commit/22002cd0a53a1ab84491d74cb8dc6a4e50c1f7b7.patch";
+      decode = "sed -e 's|Makefile\\.binary|Makefile|g'";
+      hash = "sha256-Gtmc+OIh+m7ordSn74fpOKVDQDtYyLHe6Le2snNCBYQ=";
+    })
+  ];
 
   buildPhase = ''
     make update \

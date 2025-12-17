@@ -1020,6 +1020,7 @@
   },
   "110.85": {
     "MLRISC.tgz": "sha256-KOht4JDjvxUKeroyKpE+EJSAkeU7hR/4nssk33kzLw0=",
+    "boot.x86-unix.tgz": "sha256-ipJpgY3G+dlYfIRH4T/QenH+Fp/2rGqS/uZuSY4PMBc=",
     "asdl.tgz": "sha256-C2+jDoxRoN9Qqj3L6Td02tuto8GrgUFMtCL5x+wqhrQ=",
     "ckit.tgz": "sha256-0YWmvFd7wOpcx/UkjhsIupwrN2xP0F92dI1guAV/HZM=",
     "cm.tgz": "sha256-BQQ9SQ5hPthdJULPDIrR9Qki6oxYqqdhQcC/ruqUYAw=",
@@ -1041,30 +1042,6 @@
     "smlnj-lib.tgz": "sha256-zUjX/RkL+vwtIJ5EZjaPlVcl28pd6MgfxqbeeG3gZPI=",
     "system.tgz": "sha256-qLp7FdB8ndySLaNndUbSU1x19QJjxHFmHZ99SlSsSp8=",
     "trace-debug-profile.tgz": "sha256-542vkoIeM5kq2cqRymO6ImnEG5lsDOtUfaHm9tulajo="
-  },
-  "110.86": {
-    "MLRISC.tgz": "sha256-68eAubDWFXCHU7e5zc1qFkluXYjXip/i0gUkDo+mrqs=",
-    "asdl.tgz": "sha256-FnJJZGRQ+jpVO3jAagghkRYCMfmhe563WENVb8sk5eU=",
-    "ckit.tgz": "sha256-Y2VLgkFnnigmJFVAhuVyUMkj5FY0jUVUIe037XEVn9M=",
-    "cm.tgz": "sha256-jFbr+Hmc9SEYDQQrPc3o3BlMF7J23+TLdKF6BzoYb/s=",
-    "cml.tgz": "sha256-zYiJhLR7dqu6OaEnbzWrwX2I/PTqcYUUVnb625A2wh8=",
-    "compiler.tgz": "sha256-StzHfMHKoMKUQ0iF6M+n/i1GJ66kKG1/CZRAIbrefJQ=",
-    "config.tgz": "sha256-yOm2i+iv1prVCp2No9mIWxSHyW9sNFCupOzcZWerMKg=",
-    "doc.tgz": "sha256-Ly+1jLWcsQAr+ImzNFva4uehg12FKVXGy4w74R1zCRo=",
-    "eXene.tgz": "sha256-easwHwOQg6TxSYRlljMoVyh5D1GrQf64CSmc4iBaRfg=",
-    "heap2asm.tgz": "sha256-r6ryPCyPA7y1lp94DJdaybKIZEIRBGKe4xEbpd8dwKk=",
-    "ml-burg.tgz": "sha256-vxdElUmVsHcCjyl9dd9GKUMZ/YXxYeFj3e0XJ5xfP4w=",
-    "ml-lex.tgz": "sha256-naqbJxyVk8iPuwstGlkWKPJAUKect7bxpoQRQXMKcL0=",
-    "ml-lpt.tgz": "sha256-tJz93tLtTnQV0cUqYo1L+fiZoCuh9HNZ7GtdiHQ671c=",
-    "ml-yacc.tgz": "sha256-qRWIVevUlTymwc/jWm61UJPVeaTpXeiF5XQ6vjSPgbo=",
-    "nlffi.tgz": "sha256-Z+7OspAoXVBgAYXSl2bwKNwcxw2LWakkojtdmDcM8cM=",
-    "old-basis.tgz": "sha256-f17ny474jkeLQe4hv83iuIwQp0VpbkpHhxzxSR8ixhY=",
-    "pgraph.tgz": "sha256-zQtrFormZgTh3zjursTfNec+fGYje9sdF68l90AxOB0=",
-    "runtime.tgz": "sha256-wZCVh2+HqQ2OAE8Jie03+HUhELlXwZ/w7T8UmLUuQSU=",
-    "smlnj-c.tgz": "sha256-gCkp32h0O3gZ0fxsvXGkf2LVDXMX8pmXXs5sTsmCNsg=",
-    "smlnj-lib.tgz": "sha256-C9eQkK4DvmZ/CxOKkkgvHzGHy5QsQviux0jzVUrw0uI=",
-    "system.tgz": "sha256-TEKVKX3Y75PadONezChMuWCtdk8bJMmGmZXkTpCV1DA=",
-    "trace-debug-profile.tgz": "sha256-kc35T8p47XYjOv/skBoWvMx6UGsH/mvpODmIdiMH/zo="
   },
   "110.87": {
     "MLRISC.tgz": "sha256-BFIM8jH01j2cT6VGpxlhGaIEQs1Vw/Ls17u3IphYrWU=",
@@ -1741,6 +1718,10 @@
   },
   "2025.2": {
     "git": "sha256-TEchaj0YSCK4kCQJNdgvHi83RtCZcRv64RSgYMlpZIY=",
+    "boot.amd64-unix.tgz": "sha256-N4EfJcHrco0aB7bAeXnAZzL7naZaM3yKI/U7iuSoMBs="
+  },
+  "2025.3-rc1": {
+    "git": "sha256-hk2KYI7IfFwPtSLtaB46NHvXtFFjk2KgwgNNIQArPd8=",
     "boot.amd64-unix.tgz": "sha256-N4EfJcHrco0aB7bAeXnAZzL7naZaM3yKI/U7iuSoMBs="
   }
 }

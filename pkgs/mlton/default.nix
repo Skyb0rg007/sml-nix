@@ -9,11 +9,15 @@ rec {
     version = "20251029";
   };
 
-  mlton-20241230-binary = pkgs.callPackage ./20241230-binary.nix { };
+  mlton-20241230-binary = pkgs.callPackage ./20241230-binary.nix {
+  };
   mlton-20241230 = pkgs.callPackage ./from-git.nix {
     bootstrapMlton = mlton-20241230-binary;
     rev = "on-20241230-release";
     hash = "sha256-gJUzav2xH8C4Vy5FuqN73Z6lPMSPQgJApF8LgsJXRWo=";
     version = "20241230";
+  };
+
+  mlton-20210117-binary = pkgs.callPackage ./20210117-binary.nix {
   };
 }

@@ -1,0 +1,29 @@
+{
+  "20210117": {
+    "amd64-linux": {
+      "glibc2.31": "sha256-dJy1nWuszWRBQ3Cb6GYQUijSttzUDFB6kLicm14PRdI="
+    },
+    "amd64-darwin": {
+    }
+  },
+  "20241230": {
+    "amd64-linux": {
+      "ubuntu-20.04_glibc2.31": "sha256-eFHJLilrT4STtHv5jIE1jrsjWrU+czI9wAtL2VWvV1I=",
+      "ubuntu-22.04_glibc2.35": "sha256-E6wVRxC1eTbFUKdnCw6W2g+vU2XQM9CcGaXDyQfxKiU=",
+      "ubuntu-24.04_glibc2.39": "sha256-ldXnjHcWGu77LP9WL6vTC6FngzhxPFAUflAA+bpIFZM=",
+      "ubuntu-20.04_static": "sha256-3ifxO+Dl2EU5RnWYC89TTJWGZSHEMXt3qUCAXUGamPI=",
+      "ubuntu-22.04_static": "sha256-as0hDM3viqCRDGQXqkj7BRsz3qP4U6xWmt3RQxwu/U8=",
+      "ubuntu-24.04_static": "sha256-dhcnfy0Mq6iA31cvarfxHfMRBDnCpNq53Rui4efNTOY="
+    },
+    "amd64-darwin": {
+    },
+    "amd64-mingw": {
+    },
+    "arm64-darwin": {
+    },
+    "arm64-linux": {
+    },
+    "powerpc-darwin": {
+    }
+  }
+}

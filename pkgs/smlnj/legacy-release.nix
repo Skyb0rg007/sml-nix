@@ -70,10 +70,12 @@ stdenv.mkDerivation {
     ${lib.optionalString (version != "110.89") ''
       unpackFile doc.tgz
     ''}
-    ${# This version mispackaged the doc.tgz file
+    ${
+      # This version mispackaged the doc.tgz file
       lib.optionalString (version == "110.89") ''
-      tar --strip-components=1 -xf doc.tgz doc/doc
-    ''}
+        tar --strip-components=1 -xf doc.tgz doc/doc
+      ''
+    }
   '';
 
   prePatch = ''
