@@ -6,6 +6,7 @@
   fetchurl,
   patches ? [ ],
   gnumake42,
+  libfaketime,
   ...
 }:
 let
@@ -37,13 +38,14 @@ let
     ++ builtins.filter (name: !lib.strings.hasPrefix "boot" name) (lib.attrNames hashes.${version})
   );
 in
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "smlnj";
   inherit version sources patches;
 
   nativeBuildInputs = [
     # TODO: Determine which version needs this
     gnumake42
+    libfaketime
   ];
 
   # out - binaries, libraries
@@ -92,7 +94,8 @@ stdenv.mkDerivation {
     ''}
     mkdir -pv ''${!outputBin}
     export INSTALLDIR="''${!outputBin}"
-    ./config/install.sh -default ${arch}
+    t="$(TZ=UTC date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')"
+    faketime -f "$t" ./config/install.sh -default ${arch}
 
     mkdir -pv ''${!outputDoc}/share/doc/smlnj ''${!outputMan}/share
     cp -rv doc/man ''${!outputMan}/share
@@ -104,7 +107,26 @@ stdenv.mkDerivation {
   # '';
 
   passthru.tests = {
-    # TODO: regression tests
+    exportml = (
+      pkgs.runCommand "exportml" { } ''
+        cat > test.sml <<EOF
+        val () =
+          if SMLofNJ.exportML "t"
+          then (TextIO.print "Hello, World!\n"; OS.Process.exit OS.Process.success)
+          else (TextIO.print "Exported!\n"; OS.Process.exit OS.Process.success)
+        EOF
+        t="$(TZ=UTC date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')"
+        echo "======================"
+        ${lib.getExe libfaketime} -f "$t" ${lib.getExe finalAttrs.finalPackage} @SMLgcmessages test.sml
+        echo "======================"
+        mv t.* t1
+        ${lib.getExe libfaketime} -f "$t" ${lib.getExe finalAttrs.finalPackage} @SMLgcmessages test.sml
+        echo "======================"
+        mv t.* t2
+        mkdir -pv $out
+        mv t1 t2 $out
+      ''
+    );
   };
 
   meta = {
@@ -125,4 +147,4 @@ stdenv.mkDerivation {
       ++ [ "i686-windows" ];
     mainProgram = "sml";
   };
-}
+})

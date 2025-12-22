@@ -9,6 +9,7 @@
   fetchurl,
   autoconf,
   automake,
+  libfaketime,
   version,
   rev ? "v${version}",
   ...
@@ -162,6 +163,7 @@ stdenv.mkDerivation {
     cmake
     autoconf
     automake
+    libfaketime
   ];
 
   # TODO: manpages and docs
@@ -178,7 +180,8 @@ stdenv.mkDerivation {
   buildPhase = ''
     export INSTALLDIR=$out
     mkdir -pv $out
-    ./build.sh
+    t="$(TZ=UTC date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')"
+    faketime -f "$t" ./build.sh
   '';
 
   meta = {
