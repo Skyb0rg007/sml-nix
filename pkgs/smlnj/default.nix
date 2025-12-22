@@ -2,9 +2,9 @@
   pkgs ? import <nixpkgs> { },
 }:
 rec {
-  smlnj-2025_3_rc1 = pkgs.callPackage ./release.nix {
-    version = "2025.3-rc1";
-    rev = "b229cc62316c916bd26dd2c0afde7224c436151b";
+  smlnj-2025_3_rc2 = pkgs.callPackage ./release.nix {
+    version = "2025.3-rc2";
+    # rev = "b229cc62316c916bd26dd2c0afde7224c436151b";
   };
   smlnj-2025_2 = pkgs.callPackage ./release.nix {
     version = "2025.2";

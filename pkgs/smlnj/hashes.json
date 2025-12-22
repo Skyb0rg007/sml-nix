@@ -1720,8 +1720,8 @@
     "v2025.2": "sha256-TEchaj0YSCK4kCQJNdgvHi83RtCZcRv64RSgYMlpZIY=",
     "boot.amd64-unix.tgz": "sha256-N4EfJcHrco0aB7bAeXnAZzL7naZaM3yKI/U7iuSoMBs="
   },
-  "2025.3-rc1": {
-    "b229cc62316c916bd26dd2c0afde7224c436151b": "sha256-hRtyX8xypbsXGSqP2qFz40nJeHJcwJZeUvyqMqcain8=",
-    "boot.amd64-unix.tgz": "sha256-KGE0K5P4yC8BqrUpNoUAk9J7ORC4ucw5RPjfDAItbNg="
+  "2025.3-rc2": {
+    "v2025.3-rc2": "sha256-SDs7DlQ3mcxKKc5PuHox4LhWqM1vsEkEWU9Snlm4iDM=",
+    "boot.amd64-unix.tgz": "sha256-6fhUm4qYmx9rPqa6Ktb9qtQ48jw1DQpCWIWklJuP4a0="
   }
 }
