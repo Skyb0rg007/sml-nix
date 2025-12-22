@@ -7,6 +7,7 @@
   patches ? [ ],
   gnumake42,
   libfaketime,
+  diffoscope,
   ...
 }:
 let
@@ -108,25 +109,31 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru.tests = {
     exportml = (
-      pkgs.runCommand "exportml" { } ''
-        cat > test.sml <<EOF
-        val () =
-          if SMLofNJ.exportML "t"
-          then (TextIO.print "Hello, World!\n"; OS.Process.exit OS.Process.success)
-          else (TextIO.print "Exported!\n"; OS.Process.exit OS.Process.success)
-        EOF
-        t="$(TZ=UTC date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')"
-        echo "======================"
-        ${lib.getExe libfaketime} -f "$t" ${lib.getExe finalAttrs.finalPackage} @SMLgcmessages test.sml
-        echo "======================"
-        mv t.* t1
-        ${lib.getExe libfaketime} -f "$t" ${lib.getExe finalAttrs.finalPackage} @SMLgcmessages test.sml
-        echo "======================"
-        mv t.* t2
-        mkdir -pv $out
-        mv t1 t2 $out
-      ''
-    );
+      pkgs.writeShellApplication {
+        name = "exportml-test";
+        runtimeInputs = [libfaketime finalAttrs.finalPackage diffoscope];
+        text = let 
+          file = pkgs.writeText "test.sml" ''
+            val () =
+              if SMLofNJ.exportML "t"
+              then (TextIO.print "Hello, World!\n"; OS.Process.exit OS.Process.success)
+              else (TextIO.print "Exported!\n"; OS.Process.exit OS.Process.success)
+          '';
+        in ''
+          out=_output
+          mkdir -p $out
+          cd $out || exit
+          t="$(TZ=UTC date -d "@0" +'%Y-%m-%d %H:%M:%S')"
+          for i in $(seq 5); do
+            echo "======================"
+            faketime -f "$t" ${lib.getExe finalAttrs.finalPackage} @SMLgcmessages ${file}
+            mv t.* "t$i"
+          done
+          for i in $(seq 4); do
+            diffoscope "t$i" "t$((i+1))" --html "diff$i$((i+1)).html" || true
+          done
+      '';
+    });
   };
 
   meta = {
