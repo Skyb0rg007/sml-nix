@@ -44,19 +44,13 @@ stdenv.mkDerivation (finalAttrs: {
   inherit version sources patches;
 
   nativeBuildInputs = [
-    # TODO: Determine which version needs this
-    gnumake42
+    gnumake42 # TODO: Determine which version needs this
     libfaketime
   ];
 
-  # out - binaries, libraries
-  # man - man pages
-  # doc - html and pdf documentation
-  outputs = [
-    "out"
-    "man"
-    "doc"
-  ];
+  outputs = [ "out" "doc" ];
+
+  doCheck = true;
 
   unpackPhase = ''
     for s in $sources; do
@@ -103,11 +97,24 @@ stdenv.mkDerivation (finalAttrs: {
     cp -rv doc/pdf doc/html ''${!outputDoc}/share/doc/smlnj
   '';
 
-  # TODO: Basic testing
-  # checkPhase = ''
-  # '';
+  checkPhase = ''
+    runHook preCheck
+
+    echo "Check that the compiler runs"
+    ID=a228a0bf2c3d4198a5f55c5ba489566c
+    $out/bin/sml <<EOF | grep -q "$ID"
+    CM.make "\$/smlnj-lib.cm";
+    TextIO.print "$ID\n";
+    EOF
+
+    runHook postCheck
+  '';
 
   passthru.tests = {
+    version = testers.testVersion {
+      package = finalAttrs.finalPackage;
+      command = "sml";
+    };
     exportml = (
       pkgs.writeShellApplication {
         name = "exportml-test";
