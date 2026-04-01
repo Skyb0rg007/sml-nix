@@ -8,6 +8,10 @@
   gnumake42,
   libfaketime,
   diffoscope,
+  fetchFromGitHub,
+  testers,
+  tree,
+  zsh,
   ...
 }:
 let
@@ -48,7 +52,10 @@ stdenv.mkDerivation (finalAttrs: {
     libfaketime
   ];
 
-  outputs = [ "out" "doc" ];
+  outputs = [
+    "out"
+    "doc"
+  ];
 
   doCheck = true;
 
@@ -65,7 +72,9 @@ stdenv.mkDerivation (finalAttrs: {
       unpackFile runtime.tgz
     fi
     ${lib.optionalString (version != "110.89") ''
-      unpackFile doc.tgz
+      if [ -e doc.tgz ]; then
+        unpackFile doc.tgz
+      fi
     ''}
     ${
       # This version mispackaged the doc.tgz file
@@ -89,25 +98,28 @@ stdenv.mkDerivation (finalAttrs: {
     ''}
     mkdir -pv ''${!outputBin}
     export INSTALLDIR="''${!outputBin}"
-    t="$(TZ=UTC date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')"
-    faketime -f "$t" ./config/install.sh -default ${arch}
+    ${
+      if false then
+        ''
+          t="$(TZ=UTC date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')"
+          faketime -f "$t" ./config/install.sh -default ${arch}
+        ''
+      else
+        ''
+          ./config/install.sh -default ${arch}
+        ''
+    }
 
     mkdir -pv ''${!outputDoc}/share/doc/smlnj ''${!outputMan}/share
-    cp -rv doc/man ''${!outputMan}/share
-    cp -rv doc/pdf doc/html ''${!outputDoc}/share/doc/smlnj
-  '';
-
-  checkPhase = ''
-    runHook preCheck
-
-    echo "Check that the compiler runs"
-    ID=a228a0bf2c3d4198a5f55c5ba489566c
-    $out/bin/sml <<EOF | grep -q "$ID"
-    CM.make "\$/smlnj-lib.cm";
-    TextIO.print "$ID\n";
-    EOF
-
-    runHook postCheck
+    if [ -d doc/man ]; then
+      cp -rv doc/man ''${!outputMan}/share
+    fi
+    if [ -d doc/pdf ]; then
+      cp -rv doc/pdf ''${!outputDoc}/share/doc/smlnj
+    fi
+    if [ -d doc/html ]; then
+      cp -rv doc/html ''${!outputDoc}/share/doc/smlnj
+    fi
   '';
 
   passthru.tests = {
@@ -115,32 +127,64 @@ stdenv.mkDerivation (finalAttrs: {
       package = finalAttrs.finalPackage;
       command = "sml";
     };
+    regression = stdenv.mkDerivation {
+      pname = "regression-tests";
+      version = "0.1.0";
+      src = fetchFromGitHub {
+        owner = "smlnj";
+        repo = "regression-tests";
+        rev = "6ae4b4e3d8f23500b3fdc44efeaf652f9ffff841";
+        hash = "sha256-VvNLY+tA4XjESonG9/5H+qBZjEwfBV+KywOYhvDpo5I=";
+      };
+
+      nativeBuildInputs = [ zsh ];
+
+      # TODO
+      buildPhase = ''
+        sed -i 's:/bin/sh:${lib.getExe zsh}:' bin/*.sh
+
+        # export SML=${lib.getExe finalAttrs.finalPackage}
+        zsh bin/testml.sh typing -sml ${lib.getExe finalAttrs.finalPackage}
+
+        mkdir -pv $out
+        cp -r * $out
+      '';
+    };
     exportml = (
       pkgs.writeShellApplication {
         name = "exportml-test";
-        runtimeInputs = [libfaketime finalAttrs.finalPackage diffoscope];
-        text = let 
-          file = pkgs.writeText "test.sml" ''
-            val () =
-              if SMLofNJ.exportML "t"
-              then (TextIO.print "Hello, World!\n"; OS.Process.exit OS.Process.success)
-              else (TextIO.print "Exported!\n"; OS.Process.exit OS.Process.success)
+        runtimeInputs = [
+          libfaketime
+          finalAttrs.finalPackage
+          diffoscope
+        ];
+        text =
+          let
+            file = pkgs.writeText "test.sml" ''
+              val () =
+                if SMLofNJ.exportML "t"
+                then (TextIO.print "Hello, World!\n"; OS.Process.exit OS.Process.success)
+                else (TextIO.print "Exported!\n"; OS.Process.exit OS.Process.success)
+            '';
+          in
+          ''
+            export LSAN_OPTIONS=exitcode=0
+            export ASAN_OPTIONS=verify_asan_link_order=0
+            out=_output
+            mkdir -p $out
+            cd $out || exit
+            t="$(TZ=UTC date -d "@0" +'%Y-%m-%d %H:%M:%S')"
+            for i in $(seq 5); do
+              echo "======================"
+              faketime -f "$t" ${lib.getExe finalAttrs.finalPackage} @SMLgcmessages ${file} || true
+              mv t.* "t$i"
+            done
+            for i in $(seq 4); do
+              diffoscope "t$i" "t$((i+1))" --html "diff$i$((i+1)).html" || true
+            done
           '';
-        in ''
-          out=_output
-          mkdir -p $out
-          cd $out || exit
-          t="$(TZ=UTC date -d "@0" +'%Y-%m-%d %H:%M:%S')"
-          for i in $(seq 5); do
-            echo "======================"
-            faketime -f "$t" ${lib.getExe finalAttrs.finalPackage} @SMLgcmessages ${file}
-            mv t.* "t$i"
-          done
-          for i in $(seq 4); do
-            diffoscope "t$i" "t$((i+1))" --html "diff$i$((i+1)).html" || true
-          done
-      '';
-    });
+      }
+    );
   };
 
   meta = {

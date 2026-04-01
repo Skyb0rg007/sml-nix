@@ -12,6 +12,7 @@
   libfaketime,
   version,
   rev ? "v${version}",
+  llvmVersion,
   ...
 }:
 let
@@ -47,7 +48,7 @@ let
   smlnj-llvm = stdenv.mkDerivation {
     pname = "smlnj-llvm";
     inherit src version;
-    sourceRoot = "${src.name}/runtime/llvm18";
+    sourceRoot = "${src.name}/runtime/llvm${llvmVersion}";
     nativeBuildInputs = [
       cmake
       git
@@ -172,7 +173,7 @@ stdenv.mkDerivation {
   patchPhase = ''
     unpackFile ${bootFile}
     sed -i '/^PATH=/d' config/_arch-n-opsys runtime/config/gen-posix-names.sh
-    rm -r runtime/llvm18
+    rm -r runtime/llvm${llvmVersion}
     mkdir -p runtime/bin runtime/lib
     ln -s ${smlnj-llvm}/bin/llvm-config runtime/bin/llvm-config
     ln -s ${smlnj-llvm}/lib/libCFGCodeGen.a runtime/lib/libCFGCodeGen.a
