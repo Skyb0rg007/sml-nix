@@ -1,5 +1,9 @@
 {
+  coreutils,
   cmake,
+  deterministic-uname,
+  gnugrep,
+  gnused,
   git,
   lib,
   ninja,
@@ -183,6 +187,15 @@ stdenv.mkDerivation {
     mkdir -pv $out
     t="$(TZ=UTC date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')"
     faketime -f "$t" ./build.sh
+  '';
+  postInstall = ''
+    substituteInPlace \
+      $out/bin/{.arch-n-opsys,.run-sml,heap2exec,ml-build} \
+      --replace-quiet basename ${lib.getExe' coreutils "basename"} \
+      --replace-quiet grep ${lib.getExe gnugrep} \
+      --replace-quiet head ${lib.getExe' coreutils "head"} \
+      --replace-quiet sed ${lib.getExe gnused} \
+      --replace-quiet uname ${lib.getExe deterministic-uname}
   '';
 
   meta = {
