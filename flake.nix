@@ -17,7 +17,9 @@
       {
         formatter = pkgs.nixfmt-tree;
         packages = import ./default.nix { inherit pkgs; };
+        hydraJobs = {
+          inherit (self.packages) "x86_64-linux";
+        };
       }
     );
-  # // flake-utils.lib.eachDefaultSystemPassThrough (system: { });
 }
