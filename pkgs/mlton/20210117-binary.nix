@@ -66,6 +66,7 @@ stdenv.mkDerivation {
     homepage = "http://mlton.org";
     licenses = lib.licenses.smlnj;
     mainProgram = "mlton";
+    maintainers = [ lib.maintainers.skyesoss ];
     sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
   };
 }
