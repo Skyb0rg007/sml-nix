@@ -66,7 +66,7 @@ stdenv.mkDerivation {
     homepage = "http://mlton.org";
     licenses = lib.licenses.smlnj;
     mainProgram = "mlton";
-    maintainers = [ lib.maintainers.skyesoss ];
+    maintainers = [ { email = "skye@soss.website"; } ];
     sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
   };
 }

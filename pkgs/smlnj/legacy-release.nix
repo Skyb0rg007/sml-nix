@@ -203,7 +203,7 @@ stdenv.mkDerivation (finalAttrs: {
       ++ lib.lists.intersectLists lib.platforms.unix lib.platforms.power
       ++ lib.platforms.darwin
       ++ [ "i686-windows" ];
-    maintainers = [ lib.maintainers.skyesoss ];
+    maintainers = [ { email = "skye@soss.website"; } ];
     mainProgram = "sml";
   };
 })

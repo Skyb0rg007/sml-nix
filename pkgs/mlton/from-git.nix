@@ -45,7 +45,7 @@ stdenv.mkDerivation {
     homepage = "http://mlton.org";
     licenses = lib.licenses.smlnj;
     mainProgram = "mlton";
-    maintainer = [ lib.maintainers.skyesoss ];
+    maintainer = [ { email = "skye@soss.website"; } ];
     timeout = 7200; # 2 hours
   };
 }
